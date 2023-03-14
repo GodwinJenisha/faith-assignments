@@ -1,0 +1,126 @@
+**************************assignment 1**********************************
+
+
+
+1.
+
+create table department
+(
+deptno number(20) primary key,
+deptname varchar(20) unique,
+floor number(2),
+location varchar(20)
+);
+desc department
+
+
+
+
+
+2.
+
+create table employee
+(
+empno number(3) primary key,
+managerid number(3),
+firstname varchar(20) not null,
+lastname varchar(20),
+userid varchar(20),
+deptno number(2),
+salary number(5,2),
+commisssion number(3),
+joiningdate date,
+designation varchar(25),
+constraint fk_10 foreign key(deptno) references department(deptno)
+ON DELETE CASCADE
+);
+desc employee
+
+
+
+8.
+
+create table customer
+(
+custno number(3) primary key,
+custname varchar(20),
+address varchar(40)
+);
+desc customer
+
+
+
+9.
+
+create table orders
+(
+orderno number(3) primary key,
+custno number(3),
+orderdate date,
+constraint ab foreign key(custno) references customer(custno)
+);
+
+desc orders
+
+
+
+10.
+
+create table orderitem
+(
+itemid number(3) primary key,
+orderno number(3),
+itemname varchar(20),
+quantity number(2),
+constraint mm foreign key(orderno) references orders(orderno)
+);
+
+desc orderitem
+
+12.
+
+create table course
+(
+courseid varchar(5),
+streamid varchar(20),
+deptid varchar(20),
+title varchar(40),
+description varchar(200),
+fees number,
+constraint courseiddeptid_abc primary key(courseid,deptid)
+);
+desc course
+
+
+
+14.
+create table batch
+(
+batchid varchar(30),
+courseid varchar(5),
+batchname char(1)
+);
+
+desc batch
+
+
+
+15.
+create table student1
+(
+studid varchar(20),
+lastname varchar(25),
+middlename varchar(30),
+firstname varchar(20),
+dob date default sysdate,
+address varchar(50),
+city varchar(20),
+state varchar(2),
+zipcode varchar(10),
+telephone varchar(10),
+fax varchar(10),
+email varchar(30),
+grade char(1),
+check (grade in('A','A+','A-','B','B+','B-','C','C+','D','D+','D-','F','F+','F-'))
+);
+desc student1
