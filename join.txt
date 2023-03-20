@@ -1,0 +1,181 @@
+1. Report needed: Names of employees who are manager. Hint: The names of people who have their own employeeID as the managerID 
+   You can set the status of your assignment here.
+
+2. Report needed: Names of employees who are manager.
+   Hint: The names of people who have their own employeeID as the managerID
+   You can set the status of your assignment here.
+
+3. List the name of all employees along with their department name and Annual Income.
+   For each row get the output in the form ‘Every Year Mark of Accounts department earns amount 450000’. This output has to come under a heading ‘Annual income Report’.
+   You can set the status of your assignment here.
+
+4. List the name of all employees along with their department name and Annual Income.
+   For each row get the output in the form ‘Every Year Mark of Accounts department earns amount 450000’. This output has to come under a heading ‘Annual income Report’.
+   You can set the status of your assignment here.
+
+5. Report needed: Names of departments and names of employees. Names of departments in ascending order. 
+   Within the same department, employee name should be in the descending order
+
+6. Find out employee name and departmentname of employees who either works in a Toy or Shoe department.
+
+7. Report needed: Name concatenated with department, separated by comma and space and name column Employee and department.
+
+8. Write a query to display name, job, department number and department name for all employees who work in DALLAS.
+
+9. List the names of all employees along with name of managers
+
+10. Display all employee name, manager number and manager name of all employees including King who have no manager.
+
+11. Display employee name, department number and all employees that work in same department as a given employee (‘Mathew’). Give each column an appropriate label.
+
+12. Create a unique listing of all jobs that are in department 30. Include location of department 30 in the output.
+
+13. Display the name of students and the course they are doing
+
+14. Display the name of student and the batch name
+
+15. Display the name of student and the course name even if there is no student in the course.
+
+16. Display the name of the customer, the data of order and the items ordered by the customer
+
+
+
+
+
+
+CREATE TABLE Employee
+(
+empId int primary key,
+name varchar(30),
+gender varchar(10),
+designation varchar(30),
+salary int,
+deptno int,
+CONSTRAINT fk_employeeDEPT1 FOREIGN KEY(deptno) REFERENCES department(deptno),
+managerId int
+);
+drop table Employee
+desc Employee
+
+INSERT ALL
+INTO department (deptno,deptname,location,depthead)
+VALUES(1,'IT','london','Rick')
+INTO department (deptno,deptname,location,depthead)
+VALUES(2,'PAYROLL','delhi','Jenisha')
+INTO department (deptno,deptname,location,depthead)
+VALUES(3,'HR','new york','Ram')
+INTO department (deptno,deptname,location,depthead)
+VALUES(4,'Other','sydney','Jeni')
+SELECT * from dual;
+
+
+INSERT INTO Employee VALUES(1, 'Tom','Male','IT Manager', 40000,1,NULL)
+INSERT INTO Employee VALUES(2, 'Pam', 'Female', 'Software Enginner',30000, 1,1)
+INSERT INTO Employee VALUES(3, 'John', 'Male', 'HR Manager',35000, 3,NULL)
+INSERT INTO Employee VALUES(4, 'Sam', 'Male', 'Team Lead',45000, 1,1)
+INSERT INTO Employee VALUES(5, 'Todd', 'Male','Coordinator', 28000, 3,3)
+INSERT INTO Employee VALUES(6, 'Ben', 'Male', 'Account Manager',70000, 2,NULL)
+INSERT INTO Employee VALUES(7, 'Sara', 'Female', 'Accountant',48000, 2,6)
+INSERT INTO Employee VALUES(8, 'Ganga', 'Female', 'Quality Tester',55000, 1,1)
+INSERT INTO Employee VALUES(9, 'James', 'Male',  NULL,65000,NULL,5)
+INSERT INTO Employee VALUES(10, 'Russell', 'Male',  NULL,88000,NULL,5)
+
+
+
+1.
+
+SELECT distinct(n.name) as "Manager"
+       FROM employee e JOIN employee n         
+       ON e.managerid = n.empId;
+
+2.
+
+SELECT empId,name, departName, 'Every Year Mark of '|| departName ||' department earns amount'||(salary*12)"ANNUAL INCOME" 
+       FROM deptment FULL JOIN employee
+       ON  deptment.deptID = employee.deptNo;
+
+
+3.
+
+SELECT departName, name 
+      FROM deptment D JOIN employee E
+      ON D.deptId = E.deptNo
+      ORDER BY departName, name DESC
+
+4.
+
+SELECT name,departName 
+      FROM deptment D JOIN employee E
+      ON D.deptId = E.deptNo
+      WHERE departName = 'HR' or departName = 'PAYROLL';
+
+5.
+
+SELECT CONCAT(CONCAT(name,','),CONCAT(' ',departName)) AS "Employeee and Department"
+      FROM deptment D JOIN employee E
+      ON D.deptId = E.deptNo;
+ 
+
+6.
+
+SELECT name, designation, deptNo, deptId, departName
+      FROM deptment D JOIN employee E
+      ON D.deptId = E.deptNo
+      WHERE location = 'Delhi'
+
+7.
+
+SELECT e.name as "employee", n.name as "Manager"
+       FROM employee e JOIN employee n         
+       ON e.managerid = n.empId;
+8.
+
+SELECT M.name AS "EMPLOYEE NAME", M.managerId, E.name AS "MANAGER NAME"
+      FROM employee E  RIGHT JOIN employee M
+      ON E.empId = M.managerId
+     
+9.
+
+SELECT name, deptId
+      FROM employee E LEFT JOIN deptment D
+      ON E.deptNo = D.deptId
+      WHERE  deptId = (SELECT deptNo FROM employee WHERE name = 'Tom')
+
+10
+
+SELECT location, designation 
+      FROM deptment D JOIN employee E
+      ON D.deptId = E.deptNo
+      WHERE deptId=3;
+11.
+
+SELECT studName, courseName
+      FROM student JOIN course
+      ON student.courseId = course.courseId;
+
+12.
+SELECT studName, batchName
+      FROM student JOIN course
+      ON student.courseId = course.courseId;
+
+13.
+SELECT studName, courseName
+      FROM student RIGHT JOIN course
+      ON student.courseId = course.courseId;
+
+14.
+
+
+SELECT custName, dateD, orderDetails 
+      FROM customer C INNER JOIN order O
+      ON C.orderId = O.orderNo
+
+
+
+
+
+
+
+
+
+
