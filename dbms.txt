@@ -1,0 +1,66 @@
+#Question 1
+
+create table employeesub(
+
+empdid int primary key,
+empname varchar(30),
+deptno int,
+deptname varchar(30),
+designation varchar(30),
+hiredate date,
+salary number(10,2),
+commission number(10,2)
+);
+
+insert all
+into employeesub(empdid,empname,deptno ,deptname,designation , hiredate ,salary ,commission )
+values(1,'jenisha',100,'electrical','clerk','08/15/2020',15000,500)
+into employeesub(empdid,empname,deptno ,deptname,designation , hiredate ,salary ,commission )
+values(2,'godwin',101,'mechanical','manager','06/25/2021',20000,250)
+into employeesub(empdid,empname,deptno ,deptname,designation , hiredate ,salary ,commission )
+values(3,'robin',102,'computer sceince','teacher','01/15/2020',25000,null)
+into employeesub(empdid,empname,deptno ,deptname,designation , hiredate ,salary ,commission )
+values(4,'nishanth',101,'mechanical','clerk','02/23/2019',15000,500)
+into employeesub(empdid,empname,deptno ,deptname,designation , hiredate ,salary ,commission )
+values(5,'jevelin',103,'civil','worker','09/01/2022',10000,null)
+select * from dual;
+insert into employeesub values(6,'malar',103,'civil','worker','09/01/2022',20000,null)
+insert into employeesub values(7,'masiha',103,'civil','manager','09/01/2022',25000,null)
+
+select empname,hiredate ,designation from employeesub  
+where hiredate=(select min(hiredate) from employeesub)
+
+#Question 2
+
+select * from employeesub
+insert into employeesub values(8,'Shasha',100,'electrical','clerk','12/08/2021',15000,500)
+
+select EMPNAME,HIREDATE,SALARY from employeesub where SALARY=(select SALARY from employeesub where EMPNAME='Scott') and 
+COMMISSION=(select COMMISSION from employeesub where EMPNAME='Scott')
+
+
+
+#Question 3
+
+select empdid,empname,salary from employeesub where salary>(select avg(salary) from employeesub) and deptno in (select deptno from employeesub where empname like '%t%')
+
+#Question 4
+
+insert into employeesub values(9,'jay',100,'electrical','clerk','12/08/2021',15000,null)
+select EMPNAME,DEPTNO,SALARY from employeesub where (DEPTNO,SALARY) in (select DEPTNO,SALARY from employeesub where COMMISSION is not null)
+
+
+#Question 5
+
+select empname,salary,designation  from employeesub where salary>(select max(salary)from employeesub where designation ='clerk') order by salary desc
+
+#Question 6
+
+select deptname,avg(salary)from employeesub group by deptname having avg(salary)<(select avg(salary)from employeesub)
+
+select * from employeesub
+
+
+#Question 7
+
+select empname,deptname from employeesub where salary=(select max(salary) from employeesub where designation='manager') and designation='manager'
