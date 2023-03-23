@@ -1,0 +1,86 @@
+plsql
+
+/*Q1*/
+SELECT * FROM emplo
+select * from dept
+DECLARE
+N emplo.name%TYPE;
+S emplo.salary%TYPE;
+e emplo.empid%type;
+BEGIN
+e:=:e;
+SELECT name, salary INTO N, S FROM emplo WHERE empid=e;
+IF(S<1000) THEN
+UPDATE emplo set commission=0.1*S WHERE empId=e;
+ELSIF(S>=1000 AND S <1500) THEN
+UPDATE emplo set commission=0.15*S WHERE empid=e;
+ELSIF(S>1500) THEN
+UPDATE emplo set commission=0.2*S WHERE empid=e;
+ELSIF(S is null) THEN
+UPDATE emplo set commission=0*S WHERE empid=e;
+ELSE
+dbms_output.put_line('ERROR');
+END IF;
+COMMIT;
+END;
+
+
+/*Q2*/
+DECLARE
+S emplo.salary%TYPE;
+e emplo.empid%type;
+BEGIN
+SELECT empid,salary INTO e, s FROM emplo WHERE salary=(SELECT MAX(salary) from emplo);
+INSERT INTO empll values(e,s);
+END;
+CREATE TABLE empll(
+empid number, salary number);
+SELECT * FROM empll;
+
+
+/*Q3*/
+DECLARE
+d emplo%ROWTYPE;
+e emplo.EMPID%TYPE;
+BEGIN
+e:=:e;
+SELECT * INTO d FROM emplo WHERE empid=e;
+dbms_output.put_line('EMPLOYEE ID :'||d.EMPID);
+dbms_output.put_line('EMPLOYEE NAME :'||d.NAME);
+dbms_output.put_line('EMPLOYEE SALARY :'||d.SALARY);
+dbms_output.put_line('EMPLOYEE COMMISSION:'||d.COMMISSION);
+END;
+select * from emplo
+as
+/*Q4*/
+
+
+
+DECLARE
+d int;
+BEGIN
+SELECT count(*) INTO d FROM emplo;
+dbms_output.put_line('NO of row'||d);
+END;
+
+
+
+/*Q5*/
+DECLARE
+N emplo.name%TYPE;
+S emplo.salary%TYPE;
+e emplo.empid%type;
+BEGIN
+E:=:employeeID;
+SELECT SALARY INTO S FROM emplo WHERE empid=E;
+dbms_output.put_line('Salary not less than 4000'||S);
+IF(S<4000) THEN
+DELETE FROM emplo WHERE empid=E;
+dbms_output.put_line('DELETED');
+ELSE
+dbms_output.put_line('Salary not less than 4000');
+END IF;
+COMMIT;
+END;
+Assignment 6 PLSQL.txt
+Displaying Assignment 6 PLSQL.txt.
