@@ -1,0 +1,55 @@
+/*SUB QUERY*/
+
+
+
+
+1.
+
+CREATE TABLE employye(
+   name varchar2(20),
+   hiredate date,
+   job varchar2(20),
+   salary int);
+
+INSERT INTO employye VALUES('Manu pM','9-20-2015','HR',40000,500)
+
+SELECT * FROM employye
+SELECT name, hireDate, job FROM employye WHERE NOT hireDate >ANY (SELECT hireDate from employye)
+DELETE FROM employye WHERE salary = 40000;
+
+2.
+ALTER TABLE employye ADD commission int;
+SELECT name, hireDate, job FROM employye WHERE (salary,commission) in (SELECT salary, commission FROM employye WHERE name='Scott')
+
+
+3.
+
+ALTER TABLE employye ADD numberN int;
+INSERT INTO employye VALUES('Anoop','9-20-2018','ME',50000,null,4)
+SELECT numberN, name, salary FROM employye WHERE salary > (SELECT AVG(salary) FROM employye) AND name LIKE '%t%'
+
+4.
+
+SELECT * FROM employye
+SELECT name, numberN, salary FROM employye WHERE (numberN,salary) in (SELECT numberN,salary FROM employye WHERE commission IS NOT null )
+
+
+5.
+
+SELECT * FROM employye WHERE salary in (SELECT salary FROM employye WHERE salary >ALL (SELECT salary FROM employye WHERE job='HR')) ORDER BY salary DESC
+
+6.
+
+SELECT numberN, avg(salary) FROM employye GROUP BY numberN HAVING avg(salary) <(SELECT avg(salary) FROM employye)
+
+7.
+
+SELECT name,job, salary FROM employye WHERE NOT salary <ANY (SELECT salary FROM employye WHERE post='Manager')
+ALTER TABLE employye ADD post varchar2(10);
+INSERT INTO employye VALUES('Sonu','5-10-2022','ELE',80000,null,3,'Manager')
+
+
+
+
+
+
