@@ -1,0 +1,104 @@
+create table employee
+(
+empid number(5) primary key,
+empname varchar(30),
+phone number(10),
+email varchar(30),
+areacode number(10)
+);
+drop table employee
+desc employee
+
+insert into employee (empid,empname,phone,email,areacode)
+values(110,'jenisha',9898989898,'sdhj@gmail.com',627849);
+insert into employee (empid,empname,phone,email,areacode)
+values(111,'godwin',9898989875,'ydvh@gmail.com',666849);
+insert into employee (empid,empname,phone,email,areacode)
+values(112,'shveta',9898989845,'eyrx@gmail.com',689849);
+insert into employee (empid,empname,phone,email,areacode)
+values(113,'reena',9898989824,'axvn@gmail.com',62759);
+
+select * from employee
+
+create table manufacture
+(
+manuname varchar(20) primary key,
+city varchar(20),
+state varchar(20)
+);
+drop  table manufacture
+desc manufacture
+
+insert into manufacture(manuname,city,state)
+values('lenova','nagercoil','tamil nadu');
+insert into manufacture(manuname,city,state)
+values('dell','madurai','tamil nadu');
+insert into manufacture(manuname,city,state)
+values('toshiba','kochi','kerla');
+insert into manufacture(manuname,city,state)
+values('hp','chennai','tamil nadu');
+
+select * from manufacture
+
+create  table company12
+(
+serialnumber number(5)primary key,
+manuname varchar(20),                                           
+model varchar(20),
+weight number(10),
+isactive varchar2(20),
+empid number(5),
+constraint fk_11 foreign key(empid) references employee(empid),
+constraint fk_12 foreign key(manuname) references manufacture(manuname)
+);
+
+desc company12
+drop table company12
+
+insert into company12(serialnumber,manuname,model,weight,isactive,empid)
+values(10,'lenova','08ct',1.5,'use',110);
+insert into company12(serialnumber,manuname,model,weight,isactive,empid)
+values(11,'dell','12fs',2.5,'no',111);
+insert into company12(serialnumber,manuname,model,weight,isactive,empid)
+values(12,'toshiba','41ds',1.0,'use',112);
+insert into company12(serialnumber,manuname,model,weight,isactive,empid)
+values(13,'hp','02vj',2.5,'no',113);
+select * from company12
+
+/*qstn 1*/
+
+select manuname from manufacture where state like '%tamil nadu%'
+
+
+
+/*qstn 2*/
+
+select avg(weight) from company12 where isactive='use'
+
+
+/*qstn 3*/
+
+select empname from employee where areacode like '6%'
+
+
+/*qstn 4*/
+
+select serialnumber from company12 where weight< (select avg(weight) from company12)
+
+
+/*qstn 5*/
+
+select manuname from company12 where isactive in (select  isactive from company12 where serialnumber=11)
+
+
+/*qstn 6*/
+
+create view v_1 as
+select empname,serialnumber,city from employee e inner join company12 d on(e.empid= e.empid)
+inner join  manufacture m
+on (d.manuname = m.manuname);
+
+
+
+
+
